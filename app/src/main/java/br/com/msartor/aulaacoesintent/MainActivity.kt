@@ -1,5 +1,6 @@
 package br.com.msartor.aulaacoesintent
 
+
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -29,8 +30,27 @@ class MainActivity : AppCompatActivity() {
         verificarPermissao()
 
         binding.btnExecutar.setOnClickListener {
-           chamadaTelefonica()
+           //chamadaTelefonica()
+           compartilharTexto()
         }
+    }
+
+    private fun compartilharTexto() {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            putExtra(Intent.EXTRA_TEXT, "Olá Marcelo")
+            type = "text/plain"
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        val shareIntent = Intent.createChooser(intent, "Compartilhar")
+        startActivity(shareIntent)
+
+    }
+
+    private fun chamadaTelefonica() {
+        val intent = Intent(Intent.ACTION_CALL).apply {
+            data = Uri.parse("tel:+5548991112222")
+        }
+        startActivity(intent)
     }
 
     private fun verificarPermissao() {
@@ -47,10 +67,5 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun chamadaTelefonica() {
-        val intent = Intent(Intent.ACTION_CALL).apply {
-            data = Uri.parse("tel:+5548991112222")
-        }
-        startActivity(intent)
-    }
+
 }
