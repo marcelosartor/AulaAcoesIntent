@@ -31,8 +31,30 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnExecutar.setOnClickListener {
            //chamadaTelefonica()
-           compartilharTexto()
+           //compartilharTexto()
+           // compartilharImagem()
+           exibirPdf()
         }
+    }
+
+    private fun exibirPdf() {
+        val pdf = "https://pdfobject.com/pdf/sample.pdf"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(pdf))
+
+        val shareIntent = Intent.createChooser(intent, "Compartilhar")
+        startActivity(shareIntent)
+    }
+
+
+    private fun compartilharImagem() {
+        val image = "https://i.redd.it/wizllv4jm5we1.png"
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            putExtra(Intent.EXTRA_STREAM, Uri.parse(image))
+            type = "image/*"
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        val shareIntent = Intent.createChooser(intent, "Compartilhar")
+        startActivity(shareIntent)
     }
 
     private fun compartilharTexto() {
